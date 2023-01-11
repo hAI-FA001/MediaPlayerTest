@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class MediaPlayerDemo extends Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        //for PreloaderDemo
+        System.setProperty("javafx.preloader", PreloaderDemo.class.getCanonicalName());
         launch();
     }
 
@@ -49,5 +51,20 @@ public class MediaPlayerDemo extends Application {
         stage.show();
         //play media after showing stage/window
         mediaPlayer.play();
+
+        //some other stuff to mess with
+        mediaPlayer.setRate(7.5); //play rate
+        mediaPlayer.setCycleCount(3); //no. of times to repeat video
+        mediaPlayer.setOnEndOfMedia(() -> { //what to do when video ends
+            System.out.println("MEDIA ENDED");
+        });
+        stage.setOnCloseRequest(windowEvent -> {
+            //some info about media when stage is closed
+            System.out.println(mediaPlayer.getCurrentCount());
+            System.out.println(mediaPlayer.getCurrentRate());
+            System.out.println(mediaPlayer.getCurrentTime());
+            System.out.println(mediaPlayer.getTotalDuration());
+            System.out.println(mediaPlayer.getVolume());
+        });
     }
 }
